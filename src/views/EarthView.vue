@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>Welcome!</main>
+  <main>
+    <div>Earth image</div>
+  </main>
 </template>

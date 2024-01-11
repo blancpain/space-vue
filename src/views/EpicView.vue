@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <main>Welcome!</main>
+  <main>
+    <div>EPIC API image</div>
+  </main>
 </template>
