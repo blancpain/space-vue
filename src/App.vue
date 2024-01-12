@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router'
-import { API_KEY } from './config/api'
-
-console.log(API_KEY)
 import { ref } from 'vue'
 
 const router = useRouter()
