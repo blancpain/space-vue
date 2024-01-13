@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { getDailyPic } from '@/services/getDailyPic'
-import LoadingSpinner from '@/components/LoadingSpinner.vue'
+import { getDailyPic } from '@/services';
+import LoadingSpinner from '@/components/LoadingSpinner.vue';
 
-const { dailyPic, error, loading, fetchPic } = getDailyPic()
-fetchPic()
+const { dailyPic, error, loading, fetchPic } = getDailyPic();
+fetchPic();
 </script>
 
 <template>

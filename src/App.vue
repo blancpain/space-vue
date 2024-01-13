@@ -1,39 +1,39 @@
 <script setup lang="ts">
-import { RouterView, useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { RouterView, useRouter } from 'vue-router';
+import { ref } from 'vue';
 
-const router = useRouter()
+const router = useRouter();
 
 const items = ref([
   {
     label: 'Home',
     icon: 'pi pi-home',
     command: () => {
-      router.push('/')
+      router.push('/');
     }
   },
   {
     label: 'Daily Picture',
     icon: 'pi pi-star',
     command: () => {
-      router.push('/astro')
+      router.push('/astro');
     }
   },
   {
     label: 'Earth View',
     icon: 'pi pi-globe',
     command: () => {
-      router.push('/earth')
+      router.push('/earth');
     }
   },
   {
     label: 'Epic',
     icon: 'pi pi-camera',
     command: () => {
-      router.push('/epic')
+      router.push('/epic');
     }
   }
-])
+]);
 </script>
 
 <template>
