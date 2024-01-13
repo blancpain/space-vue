@@ -1,26 +1,44 @@
+import App from './App.vue';
 import PrimeVue from 'primevue/config';
-import 'primevue/resources/themes/vela-purple/theme.css';
+import 'primevue/resources/themes/lara-light-teal/theme.css';
 import 'primeicons/primeicons.css';
 import VueGoogleMaps from '@fawmi/vue-google-maps';
 import { createApp } from 'vue';
-import App from './App.vue';
 import router from './router';
-import { API_KEY_GOOGLE } from './config/api';
+import { API_KEY_GOOGLE, firebaseConfig } from './config';
+import { createPinia } from 'pinia';
+import { plugin, defaultConfig } from '@formkit/vue';
+import '@formkit/themes/genesis';
+import ToastService from 'primevue/toastservice';
+import { initializeApp } from 'firebase/app';
 
 // UI components
 import Button from 'primevue/button';
 import Menubar from 'primevue/menubar';
+import Toast from 'primevue/toast';
 
 const app = createApp(App);
 
 app.component('PrimeButton', Button);
 app.component('MenuBar', Menubar);
+app.component('ToastVue', Toast);
 
+initializeApp(firebaseConfig);
+
+app.use(createPinia());
 app.use(router);
+app.use(
+  plugin,
+  defaultConfig({
+    theme: 'genesis'
+  })
+);
 app.use(PrimeVue);
+app.use(ToastService);
 app.use(VueGoogleMaps, {
   load: {
     key: API_KEY_GOOGLE
   }
 });
+
 app.mount('#app');

@@ -32,6 +32,13 @@ const items = ref([
     command: () => {
       router.push('/epic');
     }
+  },
+  {
+    label: 'Sign Up',
+    icon: 'pi pi-user-plus',
+    command: () => {
+      router.push('/sign-up');
+    }
   }
 ]);
 </script>
@@ -56,18 +63,4 @@ header {
   display: flex;
   justify-content: space-evenly;
 }
-
-/* NOTE: check if we need below*/
-
-/* @media (min-width: 1024px) { */
-/*   header { */
-/*     display: flex; */
-/*     place-items: center; */
-/*     padding-right: calc(var(--section-gap) / 2); */
-/*   } */
-/**/
-/*   .logo { */
-/*     margin: 0 2rem 0 0; */
-/*   } */
-/* } */
 </style>
