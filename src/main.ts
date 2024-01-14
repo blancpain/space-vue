@@ -12,16 +12,8 @@ import { plugin, defaultConfig } from '@formkit/vue';
 import '@formkit/themes/genesis';
 import ToastService from 'primevue/toastservice';
 
-// UI components
-import Button from 'primevue/button';
-import Menubar from 'primevue/menubar';
-import Toast from 'primevue/toast';
-
 const app = createApp(App);
-
-app.component('PrimeButton', Button);
-app.component('MenuBar', Menubar);
-app.component('ToastVue', Toast);
+// TODO: might not need vuefire
 
 app.use(createPinia());
 app.use(router);

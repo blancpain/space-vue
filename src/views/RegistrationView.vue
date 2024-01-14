@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <ToastVue />
+    <Toast />
     <FormKit
       type="form"
       id="registration"
@@ -54,6 +54,7 @@ import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { auth } from '@/config';
+import Toast from 'primevue/toast';
 
 type TRegistrationForm = {
   name: string;

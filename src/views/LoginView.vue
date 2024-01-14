@@ -1,6 +1,6 @@
 <template>
   <main class="main">
-    <ToastVue />
+    <Toast />
     <FormKit type="form" id="login" submit-label="Login" @submit="handleLogin" :actions="false">
       <h1 class="text-2xl font-bold mb-2">Login</h1>
       <FormKit

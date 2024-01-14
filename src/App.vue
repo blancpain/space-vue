@@ -5,6 +5,8 @@ import { auth } from './config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { onMounted } from 'vue';
 import { useAuthStore } from './stores';
+import Menubar from 'primevue/menubar';
+import Button from 'primevue/button';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -64,18 +66,18 @@ const handleSignOut = async () => {
 
 <template>
   <header>
-    <MenuBar :model="routes" class="menu">
+    <Menubar :model="routes" class="menu">
       <template #end>
         <div v-show="!isLoading">
           <div class="auth-buttons" v-if="!isLoggedIn">
-            <PrimeButton
+            <Button
               icon="pi pi-user-plus"
               iconPos="left"
               label="Sign Up"
               size="small"
               @click="$router.push('/sign-up')"
             />
-            <PrimeButton
+            <Button
               icon="pi pi-sign-in"
               iconPos="left"
               label="Login"
@@ -84,7 +86,7 @@ const handleSignOut = async () => {
               @click="$router.push('/sign-in')"
             />
           </div>
-          <PrimeButton
+          <Button
             v-if="isLoggedIn"
             icon="pi pi-sign-out"
             iconPos="left"
@@ -94,7 +96,7 @@ const handleSignOut = async () => {
           />
         </div>
       </template>
-    </MenuBar>
+    </Menubar>
   </header>
 
   <RouterView />
