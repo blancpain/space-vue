@@ -6,8 +6,6 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { onMounted } from 'vue';
 import { useAuthStore } from './stores';
 
-// TODO: need to style TOAST to make it responsive
-
 const router = useRouter();
 const isLoggedIn = ref(false);
 const isLoading = ref(true);

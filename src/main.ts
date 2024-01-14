@@ -1,4 +1,5 @@
 import App from './App.vue';
+import './assets/main.css';
 import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/lara-light-teal/theme.css';
 import 'primeicons/primeicons.css';

@@ -1,0 +1,6 @@
+.p-toast {
+  @media (max-width: 576px) {
+    max-width: 250px;
+    height: 90px;
+  }
+}
