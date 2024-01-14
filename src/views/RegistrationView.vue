@@ -3,7 +3,7 @@
     <ToastVue />
     <FormKit
       type="form"
-      id="registration-example"
+      id="registration"
       submit-label="Register"
       @submit="handleSubmit"
       :actions="false"
@@ -49,11 +49,11 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores';
-import { nanoid } from 'nanoid';
 import Button from 'primevue/button';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { useToast } from 'primevue/usetoast';
+import { useRouter } from 'vue-router';
+import { auth } from '@/config';
 
 type TRegistrationForm = {
   name: string;
@@ -62,25 +62,33 @@ type TRegistrationForm = {
   confirmPassword: string;
 };
 const toast = useToast();
-const authStore = useAuthStore();
+const router = useRouter();
 
 const handleSubmit = async (values: TRegistrationForm) => {
-  const registerUser = await createUserWithEmailAndPassword(
-    getAuth(),
-    values.email,
-    values.password
-  );
+  const registerUser = await createUserWithEmailAndPassword(auth, values.email, values.password);
 
   if (registerUser) {
+    await updateProfile(registerUser.user, {
+      displayName: values.name
+    });
+
     toast.add({
       severity: 'success',
       summary: 'Success',
-      detail: 'User registered successfully',
-      life: 8000
+      detail: 'User registered successfully. You will now be redirected to the login page.',
+      life: 5000
+    });
+    setTimeout(() => {
+      router.push('/sign-in');
+    }, 5000);
+  } else {
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Something went wrong. Please try again.',
+      life: 5000
     });
   }
-
-  authStore.addUser({ id: nanoid(), name: values.name, email: values.email, disabled: false });
 };
 </script>
 

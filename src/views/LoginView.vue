@@ -1,0 +1,84 @@
+<template>
+  <main class="main">
+    <ToastVue />
+    <FormKit type="form" id="login" submit-label="Login" @submit="handleLogin" :actions="false">
+      <h1 class="text-2xl font-bold mb-2">Login</h1>
+      <FormKit
+        type="text"
+        name="email"
+        label="Your email"
+        placeholder="eden@techLabs.com"
+        validation="required|email"
+      />
+      <FormKit
+        type="password"
+        name="password"
+        label="Password"
+        validation="required"
+        placeholder="Your password"
+      />
+
+      <Button type="submit">Sign In</Button>
+    </FormKit>
+  </main>
+</template>
+
+<script setup lang="ts">
+import { useAuthStore } from '@/stores';
+import Button from 'primevue/button';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useToast } from 'primevue/usetoast';
+import { auth } from '@/config';
+import { useRouter } from 'vue-router';
+
+type TLoginForm = {
+  email: string;
+  password: string;
+};
+const toast = useToast();
+const authStore = useAuthStore();
+const router = useRouter();
+
+const handleLogin = async (values: TLoginForm) => {
+  try {
+    const res = await signInWithEmailAndPassword(auth, values.email, values.password);
+
+    if (res.user && res.user.email && res.user.displayName) {
+      authStore.addUser({ email: res.user.email, name: res.user.displayName });
+
+      toast.add({
+        severity: 'success',
+        summary: 'Success',
+        detail: 'You are now logged in!',
+        life: 2000
+      });
+      setTimeout(() => {
+        router.push('/');
+      }, 2000);
+    } else {
+      throw new Error('Something went wrong. Please try again.');
+    }
+  } catch (error) {
+    // TODO: improve error handling
+    toast.add({
+      severity: 'error',
+      summary: 'Error',
+      detail: 'Something went wrong. Please try again.',
+      life: 8000
+    });
+  }
+};
+</script>
+
+<style scoped>
+.main {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+</style>
