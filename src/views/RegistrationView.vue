@@ -55,6 +55,9 @@ import { useToast } from 'primevue/usetoast';
 import { useRouter } from 'vue-router';
 import { auth } from '@/config';
 import Toast from 'primevue/toast';
+import { db } from '@/config';
+import { collection, addDoc } from 'firebase/firestore';
+import type { TUserFavorites } from '@/types';
 
 type TRegistrationForm = {
   name: string;
@@ -71,6 +74,12 @@ const handleSubmit = async (values: TRegistrationForm) => {
   if (registerUser) {
     await updateProfile(registerUser.user, {
       displayName: values.name
+    });
+
+    // TODO: error handling
+    await addDoc(collection(db, 'users'), {
+      email: values.email,
+      favorites: [] as TUserFavorites[]
     });
 
     toast.add({
