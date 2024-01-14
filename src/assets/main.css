@@ -4,3 +4,15 @@
     height: 90px;
   }
 }
+
+p-button {
+  transition: transform 0.2s ease-in-out;
+}
+
+.p-button:active {
+  transform: scale(0.95);
+}
+
+*:focus {
+  box-shadow: none;
+}
