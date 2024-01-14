@@ -44,7 +44,7 @@ const handleLogin = async (values: TLoginForm) => {
     const res = await signInWithEmailAndPassword(auth, values.email, values.password);
 
     if (res.user && res.user.email && res.user.displayName) {
-      authStore.addUser({ email: res.user.email, name: res.user.displayName });
+      authStore.setUser({ email: res.user.email, name: res.user.displayName });
 
       toast.add({
         severity: 'success',

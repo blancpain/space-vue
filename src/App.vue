@@ -46,9 +46,10 @@ onMounted(() => {
   onAuthStateChanged(auth, (user) => {
     if (user && user.email && user.displayName) {
       isLoggedIn.value = true;
-      authStore.addUser({ email: user.email, name: user.displayName });
+      authStore.setUser({ email: user.email, name: user.displayName });
     } else {
       isLoggedIn.value = false;
+      authStore.clearUser();
     }
     isLoading.value = false;
   });
@@ -57,6 +58,7 @@ const handleSignOut = async () => {
   await signOut(auth);
   isLoggedIn.value = false;
   router.push('/');
+  authStore.clearUser();
 };
 </script>
 

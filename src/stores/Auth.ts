@@ -2,12 +2,18 @@ import { defineStore } from 'pinia';
 import type { TUser } from '@/types/Auth';
 
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
-    users: [] as TUser[]
+  state: (): TUser => ({
+    name: '',
+    email: ''
   }),
   actions: {
-    addUser(user: TUser) {
-      this.users.push(user);
+    setUser(user: TUser) {
+      this.name = user.name;
+      this.email = user.email;
+    },
+    clearUser() {
+      this.name = '';
+      this.email = '';
     }
   }
 });
