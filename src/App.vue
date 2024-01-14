@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router';
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import { auth } from './config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { onMounted } from 'vue';
 import { useAuthStore } from './stores';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';

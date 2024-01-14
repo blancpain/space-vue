@@ -13,7 +13,6 @@ import '@formkit/themes/genesis';
 import ToastService from 'primevue/toastservice';
 
 const app = createApp(App);
-// TODO: might not need vuefire
 
 app.use(createPinia());
 app.use(router);
