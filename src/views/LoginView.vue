@@ -30,6 +30,7 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useToast } from 'primevue/usetoast';
 import { auth } from '@/config';
 import { useRouter } from 'vue-router';
+import Toast from 'primevue/toast';
 
 type TLoginForm = {
   email: string;
@@ -50,11 +51,11 @@ const handleLogin = async (values: TLoginForm) => {
         severity: 'success',
         summary: 'Success',
         detail: 'You are now logged in!',
-        life: 2000
+        life: 1000
       });
       setTimeout(() => {
         router.push('/');
-      }, 2000);
+      }, 1000);
     } else {
       throw new Error('Something went wrong. Please try again.');
     }
@@ -64,7 +65,7 @@ const handleLogin = async (values: TLoginForm) => {
       severity: 'error',
       summary: 'Error',
       detail: 'Something went wrong. Please try again.',
-      life: 8000
+      life: 6000
     });
   }
 };
