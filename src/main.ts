@@ -5,12 +5,11 @@ import 'primeicons/primeicons.css';
 import VueGoogleMaps from '@fawmi/vue-google-maps';
 import { createApp } from 'vue';
 import router from './router';
-import { API_KEY_GOOGLE, firebaseConfig } from './config';
+import { API_KEY_GOOGLE } from './config';
 import { createPinia } from 'pinia';
 import { plugin, defaultConfig } from '@formkit/vue';
 import '@formkit/themes/genesis';
 import ToastService from 'primevue/toastservice';
-import { initializeApp } from 'firebase/app';
 
 // UI components
 import Button from 'primevue/button';
@@ -22,8 +21,6 @@ const app = createApp(App);
 app.component('PrimeButton', Button);
 app.component('MenuBar', Menubar);
 app.component('ToastVue', Toast);
-
-initializeApp(firebaseConfig);
 
 app.use(createPinia());
 app.use(router);
