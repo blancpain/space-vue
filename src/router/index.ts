@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
+import HomeView from '@/views/HomeView.vue';
 import AstroView from '@/views/AstroView.vue';
 import EarthView from '@/views/EarthView.vue';
 import EpicView from '@/views/EpicView.vue';
 import RegistrationView from '@/views/RegistrationView.vue';
+import LoginView from '@/views/LoginView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/sign-up',
       name: 'registration',
       component: RegistrationView
+    },
+    {
+      path: '/sign-in',
+      name: 'login',
+      component: LoginView
     }
   ]
 });

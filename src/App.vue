@@ -1,10 +1,19 @@
 <script setup lang="ts">
 import { RouterView, useRouter } from 'vue-router';
 import { ref } from 'vue';
+import { auth } from './config';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { onMounted } from 'vue';
+import { useAuthStore } from './stores';
+
+// TODO: need to style TOAST to make it responsive
 
 const router = useRouter();
+const isLoggedIn = ref(false);
+const isLoading = ref(true);
+const authStore = useAuthStore();
 
-const items = ref([
+const routes = ref([
   {
     label: 'Home',
     icon: 'pi pi-home',
@@ -32,20 +41,60 @@ const items = ref([
     command: () => {
       router.push('/epic');
     }
-  },
-  {
-    label: 'Sign Up',
-    icon: 'pi pi-user-plus',
-    command: () => {
-      router.push('/sign-up');
-    }
   }
 ]);
+
+onMounted(() => {
+  onAuthStateChanged(auth, (user) => {
+    if (user && user.email && user.displayName) {
+      isLoggedIn.value = true;
+      authStore.addUser({ email: user.email, name: user.displayName });
+    } else {
+      isLoggedIn.value = false;
+    }
+    isLoading.value = false;
+  });
+});
+const handleSignOut = async () => {
+  await signOut(auth);
+  isLoggedIn.value = false;
+  router.push('/');
+};
 </script>
 
 <template>
   <header>
-    <MenuBar :model="items" class="menu" />
+    <MenuBar :model="routes" class="menu">
+      <template #end>
+        <div v-show="!isLoading">
+          <div class="auth-buttons" v-if="!isLoggedIn">
+            <PrimeButton
+              icon="pi pi-user-plus"
+              iconPos="left"
+              label="Sign Up"
+              size="small"
+              @click="$router.push('/sign-up')"
+            />
+            <PrimeButton
+              icon="pi pi-sign-in"
+              iconPos="left"
+              label="Login"
+              size="small"
+              outlined
+              @click="$router.push('/sign-in')"
+            />
+          </div>
+          <PrimeButton
+            v-if="isLoggedIn"
+            icon="pi pi-sign-out"
+            iconPos="left"
+            label="Logout"
+            size="small"
+            @click="handleSignOut"
+          />
+        </div>
+      </template>
+    </MenuBar>
   </header>
 
   <RouterView />
@@ -62,5 +111,9 @@ header {
   margin-bottom: 1rem;
   display: flex;
   justify-content: space-evenly;
+}
+.auth-buttons {
+  display: flex;
+  gap: 1rem;
 }
 </style>
