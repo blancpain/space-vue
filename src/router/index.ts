@@ -5,6 +5,7 @@ import EarthView from '@/views/EarthView.vue';
 import EpicView from '@/views/EpicView.vue';
 import RegistrationView from '@/views/RegistrationView.vue';
 import LoginView from '@/views/LoginView.vue';
+import DashboardView from '@/views/DashboardView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -38,6 +39,11 @@ const router = createRouter({
       path: '/sign-in',
       name: 'login',
       component: LoginView
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: DashboardView
     }
   ]
 });
