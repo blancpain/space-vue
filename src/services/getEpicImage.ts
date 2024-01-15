@@ -1,5 +1,4 @@
 import { ref } from 'vue';
-import { API_KEY } from '@/config/api';
 import type { TEpicImage } from '@/types/nasaApi';
 import { extractDate } from '@/utils';
 
@@ -11,7 +10,9 @@ export const getEpicImage = () => {
 
   const fetchImage = async () => {
     try {
-      const res = await fetch('https://api.nasa.gov/EPIC/api/enhanced/images?api_key=' + API_KEY);
+      const res = await fetch(
+        'https://api.nasa.gov/EPIC/api/enhanced/images?api_key=' + import.meta.env.VITE_API_KEY
+      );
       if (!res.ok) {
         throw Error('no data available');
       }

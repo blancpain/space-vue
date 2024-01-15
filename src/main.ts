@@ -6,7 +6,6 @@ import 'primeicons/primeicons.css';
 import VueGoogleMaps from '@fawmi/vue-google-maps';
 import { createApp } from 'vue';
 import router from './router';
-import { API_KEY_GOOGLE } from './config';
 import { createPinia } from 'pinia';
 import { plugin, defaultConfig } from '@formkit/vue';
 import '@formkit/themes/genesis';
@@ -26,7 +25,7 @@ app.use(PrimeVue);
 app.use(ToastService);
 app.use(VueGoogleMaps, {
   load: {
-    key: API_KEY_GOOGLE
+    key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string
   }
 });
 

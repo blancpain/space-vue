@@ -1,6 +1,5 @@
 import { ref } from 'vue';
 import type { TDailyPic } from '@/types/nasaApi';
-import { API_KEY } from '@/config/api';
 import { formatDate } from '@/utils';
 
 export const getDailyPic = () => {
@@ -11,7 +10,9 @@ export const getDailyPic = () => {
   const fetchPic = async (date: Date) => {
     try {
       const res = await fetch(
-        `https://api.nasa.gov/planetary/apod?date=${formatDate(date)}&api_key=${API_KEY}`
+        `https://api.nasa.gov/planetary/apod?date=${formatDate(date)}&api_key=${
+          import.meta.env.VITE_API_KEY
+        }`
       );
       if (!res.ok) {
         throw Error('no data available');
