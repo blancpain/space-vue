@@ -4,6 +4,7 @@ import { getEpicImage } from '@/services';
 
 const { epicImageURL, error, loading, fetchImage } = getEpicImage();
 fetchImage();
+//TODO : add date range
 </script>
 
 <template>
