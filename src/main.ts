@@ -25,7 +25,7 @@ app.use(PrimeVue);
 app.use(ToastService);
 app.use(VueGoogleMaps, {
   load: {
-    key: import.meta.env.VITE_GOOGLE_MAPS_API_KEY as string
+    key: import.meta.env.VITE_API_KEY_GOOGLE_MAPS as string
   }
 });
 
