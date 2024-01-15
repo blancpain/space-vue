@@ -6,6 +6,7 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { useAuthStore } from './stores';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
+import Avatar from 'primevue/avatar';
 
 const router = useRouter();
 const isLoggedIn = ref(false);
@@ -22,20 +23,20 @@ const routes = ref([
   },
   {
     label: 'Daily Picture',
-    icon: 'pi pi-star',
+    icon: 'pi pi-heart',
     command: () => {
       router.push('/astro');
     }
   },
   {
-    label: 'Earth View',
+    label: 'Satelite View',
     icon: 'pi pi-globe',
     command: () => {
       router.push('/earth');
     }
   },
   {
-    label: 'Epic',
+    label: 'EPIC Pictures',
     icon: 'pi pi-camera',
     command: () => {
       router.push('/epic');
@@ -65,10 +66,10 @@ const handleSignOut = async () => {
 
 <template>
   <header>
-    <Menubar :model="routes" class="menu">
+    <Menubar :model="routes" class="navbar">
       <template #end>
         <div v-show="!isLoading">
-          <div class="auth-buttons" v-if="!isLoggedIn">
+          <div class="unlogged-buttons" v-if="!isLoggedIn">
             <Button
               icon="pi pi-user-plus"
               iconPos="left"
@@ -85,14 +86,23 @@ const handleSignOut = async () => {
               @click="$router.push('/sign-in')"
             />
           </div>
-          <Button
-            v-if="isLoggedIn"
-            icon="pi pi-sign-out"
-            iconPos="left"
-            label="Logout"
-            size="small"
-            @click="handleSignOut"
-          />
+          <div class="logged-buttons">
+            <Avatar
+              icon="pi pi-user"
+              shape="circle"
+              v-if="isLoggedIn"
+              @click="$router.push('/dashboard')"
+              class="avatar"
+            />
+            <Button
+              v-if="isLoggedIn"
+              icon="pi pi-sign-out"
+              iconPos="left"
+              label="Logout"
+              size="small"
+              @click="handleSignOut"
+            />
+          </div>
         </div>
       </template>
     </Menubar>
@@ -106,15 +116,22 @@ header {
   line-height: 1.5;
   max-height: 100vh;
 }
-
-.menu {
+.navbar {
   width: 100%;
   margin-bottom: 1rem;
   display: flex;
   justify-content: space-evenly;
 }
-.auth-buttons {
+.unlogged-buttons {
   display: flex;
   gap: 1rem;
+}
+.logged-buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.avatar {
+  cursor: pointer;
 }
 </style>
