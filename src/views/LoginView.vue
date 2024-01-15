@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAuthStore } from '@/stores';
+import { useAuthStore, useAuthStateStore } from '@/stores';
 import Button from 'primevue/button';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useToast } from 'primevue/usetoast';
@@ -38,6 +38,7 @@ type TLoginForm = {
 };
 const toast = useToast();
 const authStore = useAuthStore();
+const authStateStore = useAuthStateStore();
 const router = useRouter();
 
 const handleLogin = async (values: TLoginForm) => {
@@ -53,6 +54,8 @@ const handleLogin = async (values: TLoginForm) => {
         detail: 'You are now logged in!',
         life: 1000
       });
+
+      authStateStore.setLoggedIn(true);
       setTimeout(() => {
         router.push('/');
       }, 1000);

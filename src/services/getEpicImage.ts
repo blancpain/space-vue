@@ -1,10 +1,8 @@
 import { ref } from 'vue';
 import type { TEpicImage } from '@/types/nasaApi';
-import { extractDate } from '@/utils';
 
 export const getEpicImage = () => {
-  const epicImage = ref<TEpicImage>({});
-  const epicImageURL = ref('');
+  const epicImages = ref<TEpicImage[]>([]);
   const loading = ref(true);
   const error = ref('');
 
@@ -17,13 +15,7 @@ export const getEpicImage = () => {
         throw Error('no data available');
       }
       const data: TEpicImage[] = await res.json();
-      // NOTE: the EPIC API returns an array of images (seems to be 10?), but we only want the first one which is the most recent
-      epicImage.value = data[0];
-
-      if (epicImage.value.identifier) {
-        const { year, month, day } = extractDate(epicImage.value.identifier);
-        epicImageURL.value = `https://epic.gsfc.nasa.gov/archive/enhanced/${year}/${month}/${day}/png/${epicImage.value.image}.png`;
-      }
+      epicImages.value = data;
     } catch (err) {
       if (err instanceof Error) {
         error.value = err.message;
@@ -34,5 +26,5 @@ export const getEpicImage = () => {
     }
   };
 
-  return { epicImageURL, loading, error, fetchImage };
+  return { epicImages, loading, error, fetchImage };
 };
