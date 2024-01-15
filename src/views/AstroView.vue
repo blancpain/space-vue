@@ -14,7 +14,7 @@ import type { QueryDocumentSnapshot } from 'firebase/firestore';
 import { getDailyPic } from '@/services';
 
 const currentDate = ref(new Date());
-const { dailyPic, error, loading, fetchPic } = getDailyPic();
+const { dailyPic, loading, fetchPic } = getDailyPic();
 const isFavorite = ref(false);
 const heartIcon = ref('pi pi-heart');
 const toast = useToast();
@@ -34,8 +34,6 @@ const loadFavorites = async () => {
     heartIcon.value = isFavorite.value ? 'pi pi-heart-fill' : 'pi pi-heart';
   }
 };
-
-// TODO: show last day's picture if there is no picture for the current day or a template
 
 onMounted(async () => {
   fetchPic(currentDate.value);
@@ -116,7 +114,11 @@ const toggleFavorite = async () => {
     <div v-else-if="loading">
       <LoadingSpinner />
     </div>
-    <div v-else-if="error">Error: {{ error }}</div>
+    <div v-else>
+      <div class="no-image-message">
+        <p>Looks like there is no image for this day. Try another day! 🪐</p>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -163,5 +165,11 @@ main {
     gap: 1rem;
     align-items: center;
   }
+}
+
+.no-image-message {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 24px;
 }
 </style>
