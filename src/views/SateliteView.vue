@@ -11,6 +11,8 @@ watch(coords, () => {
     coordsAvailable.value = true;
   }
 });
+
+// TODO: just add some styling and a title...
 </script>
 
 <template>
