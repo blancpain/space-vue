@@ -54,7 +54,6 @@ onMounted(() => {
       authStore.clearUser();
     }
     isLoading.value = false;
-    authStateStore.setLoggedIn(false);
   });
 });
 const handleSignOut = async () => {

@@ -57,7 +57,7 @@ const handleLogin = async (values: TLoginForm) => {
 
       authStateStore.setLoggedIn(true);
       setTimeout(() => {
-        router.push('/dashboard');
+        router.push('/');
       }, 1000);
     } else {
       throw new Error('Something went wrong. Please try again.');
