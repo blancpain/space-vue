@@ -1,34 +1,41 @@
 <script setup lang="ts">
-import { getDailyPic } from '@/services';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import Calendar from 'primevue/calendar';
 import Fieldset from 'primevue/fieldset';
 import Image from 'primevue/image';
 import Button from 'primevue/button';
+import Toast from 'primevue/toast';
 import { ref, onMounted, watch } from 'vue';
 import { db, auth } from '@/config';
 import { collection, getDocs, doc, updateDoc } from 'firebase/firestore';
 import { useToast } from 'primevue/usetoast';
-import Toast from 'primevue/toast';
 import type { TUserFavorites } from '@/types';
+import type { QueryDocumentSnapshot } from 'firebase/firestore';
+import { getDailyPic } from '@/services';
 
 const currentDate = ref(new Date());
 const { dailyPic, error, loading, fetchPic } = getDailyPic();
 const isFavorite = ref(false);
 const heartIcon = ref('pi pi-heart');
 const toast = useToast();
+const userFavorites = ref<TUserFavorites[]>([]);
+const firestoreUser = ref<QueryDocumentSnapshot>();
 
 const loadFavorites = async () => {
   const querySnapshot = await getDocs(collection(db, 'users'));
-  const user = querySnapshot.docs.find((doc) => doc.data().email === auth.currentUser?.email);
-  if (user) {
-    const favorites = user.data().favorites as TUserFavorites[];
-    isFavorite.value = favorites
+  firestoreUser.value = querySnapshot.docs.find(
+    (doc) => doc.data().email === auth.currentUser?.email
+  );
+  if (firestoreUser.value) {
+    userFavorites.value = firestoreUser.value.data().favorites as TUserFavorites[];
+    isFavorite.value = userFavorites.value
       .map((favorite) => favorite.title)
       .includes(dailyPic.value.title as string);
     heartIcon.value = isFavorite.value ? 'pi pi-heart-fill' : 'pi pi-heart';
   }
 };
+
+// TODO: show last day's picture if there is no picture for the current day or a template
 
 onMounted(async () => {
   fetchPic(currentDate.value);
@@ -52,31 +59,28 @@ const toggleFavorite = async () => {
       detail: 'You need to be logged in to save a picture to favorites!',
       life: 6000
     });
+    return;
+  }
 
+  if (!firestoreUser.value) {
     return;
   }
 
   isFavorite.value = !isFavorite.value;
   heartIcon.value = isFavorite.value ? 'pi pi-heart-fill' : 'pi pi-heart';
 
-  const querySnapshot = await getDocs(collection(db, 'users'));
-  const user = querySnapshot.docs.find((doc) => doc.data().email === auth.currentUser?.email);
+  const isSelectedFavorite = userFavorites.value
+    .map((favorite) => favorite.title)
+    .includes(dailyPic.value.title as string);
 
-  if (user) {
-    const favorites = user.data().favorites as TUserFavorites[];
-    const isFavorite = favorites
-      .map((favorite) => favorite.title)
-      .includes(dailyPic.value.title as string);
-
-    if (isFavorite) {
-      await updateDoc(doc(db, 'users', user.id), {
-        favorites: favorites.filter((favorite) => favorite.title !== dailyPic.value.title)
-      });
-    } else {
-      await updateDoc(doc(db, 'users', user.id), {
-        favorites: [...favorites, { title: dailyPic.value.title, url: dailyPic.value.url }]
-      });
-    }
+  if (isSelectedFavorite) {
+    await updateDoc(doc(db, 'users', firestoreUser.value.id), {
+      favorites: userFavorites.value.filter((favorite) => favorite.title !== dailyPic.value.title)
+    });
+  } else {
+    await updateDoc(doc(db, 'users', firestoreUser.value.id), {
+      favorites: [...userFavorites.value, { title: dailyPic.value.title, url: dailyPic.value.url }]
+    });
   }
 };
 </script>
