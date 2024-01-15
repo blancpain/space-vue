@@ -3,15 +3,15 @@ import { RouterView, useRouter } from 'vue-router';
 import { ref, onMounted } from 'vue';
 import { auth } from './config';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
-import { useAuthStore } from './stores';
+import { useAuthStore, useAuthStateStore } from './stores';
 import Menubar from 'primevue/menubar';
 import Button from 'primevue/button';
 import Avatar from 'primevue/avatar';
 
 const router = useRouter();
-const isLoggedIn = ref(false);
 const isLoading = ref(true);
 const authStore = useAuthStore();
+const authStateStore = useAuthStateStore();
 
 const routes = ref([
   {
@@ -47,18 +47,19 @@ const routes = ref([
 onMounted(() => {
   onAuthStateChanged(auth, (user) => {
     if (user && user.email && user.displayName) {
-      isLoggedIn.value = true;
+      authStateStore.setLoggedIn(true);
       authStore.setUser({ email: user.email, name: user.displayName });
     } else {
-      isLoggedIn.value = false;
+      authStateStore.setLoggedIn(false);
       authStore.clearUser();
     }
     isLoading.value = false;
+    authStateStore.setLoggedIn(false);
   });
 });
 const handleSignOut = async () => {
   await signOut(auth);
-  isLoggedIn.value = false;
+  authStateStore.setLoggedIn(false);
   router.push('/');
   authStore.clearUser();
 };
@@ -69,7 +70,7 @@ const handleSignOut = async () => {
     <Menubar :model="routes" class="navbar">
       <template #end>
         <div v-show="!isLoading">
-          <div class="unlogged-buttons" v-if="!isLoggedIn">
+          <div class="unlogged-buttons" v-if="!authStateStore.isLoggedIn">
             <Button
               icon="pi pi-user-plus"
               iconPos="left"
@@ -86,16 +87,14 @@ const handleSignOut = async () => {
               @click="$router.push('/sign-in')"
             />
           </div>
-          <div class="logged-buttons">
+          <div class="logged-buttons" v-if="authStateStore.isLoggedIn">
             <Avatar
               icon="pi pi-user"
               shape="circle"
-              v-if="isLoggedIn"
               @click="$router.push('/dashboard')"
               class="avatar"
             />
             <Button
-              v-if="isLoggedIn"
               icon="pi pi-sign-out"
               iconPos="left"
               label="Logout"

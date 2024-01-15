@@ -76,7 +76,7 @@ const handleSubmit = async (values: TRegistrationForm) => {
       displayName: values.name
     });
 
-    // TODO: error handling
+    // TODO: error handling for db errors
     await addDoc(collection(db, 'users'), {
       email: values.email,
       favorites: [] as TUserFavorites[]
@@ -86,17 +86,17 @@ const handleSubmit = async (values: TRegistrationForm) => {
       severity: 'success',
       summary: 'Success',
       detail: 'User registered successfully. You will now be redirected to the login page.',
-      life: 5000
+      life: 4000
     });
     setTimeout(() => {
       router.push('/sign-in');
-    }, 5000);
+    }, 4000);
   } else {
     toast.add({
       severity: 'error',
       summary: 'Error',
       detail: 'Something went wrong. Please try again.',
-      life: 5000
+      life: 4000
     });
   }
 };
