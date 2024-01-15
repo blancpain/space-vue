@@ -15,13 +15,13 @@ Stay updated with the latest EPIC (Earth Polychromatic Imaging Camera) pictures 
 
 ## Tech Stack
 
-- **Vue**: Frontend framework 
-- **Typescript**: Typed superset of JavaScript 
-- **Pinia**: State management for Vue 
-- **CI/CD Pipeline**: GitHub Actions for automatic deployments 
-- **Firebase Auth**: Authentication service 
-- **Firestore**: Database for seamless data storage 
-- **Google Maps API**: Powers our Satellite View feature 
-- **NASA APIs**: Bringing you the wonders of the cosmos 
+- **Vue**
+- **Typescript**
+- **Pinia**
+- **CI/CD Pipeline with GitHub Actions**
+- **Firebase Auth**
+- **Firestore Database**
+- **Google Maps API**
+- **NASA APIs**
 
 ## [Preview Space Vue](https://blancpain.github.io/space-vue/#/) 🌌
