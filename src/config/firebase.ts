@@ -4,11 +4,11 @@ import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_API_KEY_FIREBASE,
-  authDomain: import.meta.env.VITE_AUTHDOMAIN,
-  projectId: import.meta.env.VITE_PROJECTID,
-  storageBucket: import.meta.env.VITE_STORAGEBUCKET,
-  messagingSenderId: import.meta.env.VITE_MESSAGINGSENDERID,
-  appId: import.meta.env.VITE_APPID
+  authDomain: 'space-view-ydimitrov.firebaseapp.com',
+  projectId: 'space-view-ydimitrov',
+  storageBucket: 'space-view-ydimitrov.appspot.com',
+  messagingSenderId: '482619231336',
+  appId: '1:482619231336:web:c36bb064862161797f7fdd'
 };
 
 const app = initializeApp(firebaseConfig);
