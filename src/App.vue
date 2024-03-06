@@ -13,6 +13,8 @@ const isLoading = ref(true);
 const authStore = useAuthStore();
 const authStateStore = useAuthStateStore();
 
+// TODO: commit changes
+
 const routes = ref([
   {
     label: 'Home',
@@ -28,13 +30,13 @@ const routes = ref([
       router.push('/astro');
     }
   },
-  {
-    label: 'Satelite View',
-    icon: 'pi pi-globe',
-    command: () => {
-      router.push('/earth');
-    }
-  },
+  // {
+  //   label: 'Satelite View',
+  //   icon: 'pi pi-globe',
+  //   command: () => {
+  //     router.push('/earth');
+  //   }
+  // },
   {
     label: 'EPIC Pictures',
     icon: 'pi pi-camera',

@@ -1,4 +1,6 @@
-<script setup lang="ts">
+<!-- NOTE: not used atm since google maps api is not free anymore -->
+
+<!-- <script setup lang="ts">
 import { useGeolocation } from '@vueuse/core';
 import LoadingSpinner from '@/components/LoadingSpinner.vue';
 import { ref, watch } from 'vue';
@@ -47,4 +49,4 @@ h1 {
   display: flex;
   justify-content: center;
 }
-</style>
+</style> -->

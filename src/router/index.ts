@@ -1,7 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import HomeView from '@/views/HomeView.vue';
 import AstroView from '@/views/AstroView.vue';
-import SateliteView from '@/views/SateliteView.vue';
+// import SateliteView from '@/views/SateliteView.vue';
 import EpicView from '@/views/EpicView.vue';
 import RegistrationView from '@/views/RegistrationView.vue';
 import LoginView from '@/views/LoginView.vue';
@@ -22,11 +22,11 @@ const router = createRouter({
       name: 'astro',
       component: AstroView
     },
-    {
+    /* {
       path: '/earth',
       name: 'earth',
       component: SateliteView
-    },
+    }, */
     {
       path: '/epic',
       name: 'epic',
