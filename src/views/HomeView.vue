@@ -38,12 +38,12 @@ onMounted(() => {
           pictures.
         </p>
       </AccordionTab>
-      <AccordionTab header="Satellite View">
+      <!-- <AccordionTab header="Satellite View">
         <p class="m-0">
           Take a virtual tour with the satellite view of your current location. Roam freely and
           discover the beauty of Earth from space.
         </p>
-      </AccordionTab>
+      </AccordionTab> -->
       <AccordionTab header="Latest EPIC Pictures">
         <p class="m-0">
           Stay updated with the latest EPIC (Earth Polychromatic Imaging Camera) pictures from NASA.
